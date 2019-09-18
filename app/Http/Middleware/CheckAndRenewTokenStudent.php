@@ -1,38 +1,42 @@
 <?php
 namespace App\Http\Middleware;
 use Closure;
+use App\Models\Student;
+
 class CheckAndRenewTokenStudent
 {
     public function handle($request, Closure $next)
     {
-        $token = $request->cookie('token');// || $request->input('token');
+        $data=[];
+        $token = $request->cookie('token');
         if (!$token) {
             $token = $request->header('token');
         }
         if (!$token) {
             $token = $request->input('token');
         }
+
         if (!$token) {
             return $this->tokenInvalidRes();
         }
+
         try {
-            if ($token =='111'){
-                $user = 'lfx';
-            }else{
-                return $this->tokenInvalidRes();
+            $user = Student::getUserByToken($token);
+
+            if(!$user){
+                return apiResponse('401',"token无效!",$token);
             }
-
-
-
 
         }catch (\Exception $e) {
             return $this->internalErrRes();
         }
-
-        $user = [
-            'user' => $user
+        $data = [
+            'user' => $user['user'],
+            'name' => $user['name'],
+            'token' => $user['token']
         ];
-        $request->merge($user);
+        Student::renewToken($token);
+        $request->merge($data);
         return $next($request);
 
     }

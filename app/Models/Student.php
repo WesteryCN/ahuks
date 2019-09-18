@@ -5,14 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model{
-
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
     protected $dates = ['deleted_at'];
-
     /**
      * @var bool 主键是否自增
      */
@@ -37,24 +35,97 @@ class Student extends Model{
      * @var array 为空，则所有字段可集体赋值
      */
     protected $guarded = [];
-
     /**
      * @var array 序列化时隐藏的字段
      */
     protected $hidden = ['token_expired_at',];
-
     public static function getUser($userName, $psw)
     {
-
-
         $user = Student::where('s_number', $userName)->where('password', $psw)->first();
-
         if ($user) {
-            return $user->toArray();
+            $token = substr(md5(strval(uniqid()). 'ahulfx' ), 0, 16);
+            $user -> update([
+                'token' => $token,
+                'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
+            ]);
+            $data=[];
+            $data['user'] = $userName;
+            $data['token'] =$token;
+            return $data;
         } else {
             return [];
         }
     }
+    public static function setToken($userName)
+    {
+        $token = substr(md5(uniqid() . 'ahulfx'), 0, 16);
+        $token_msg = Student::where('s_number', $userName)->first()->update(
+            [
+                'token' => $token,
+                'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
+            ]
+        );
+        $data=[];
+        $data['user'] = $userName;
+        $data['token'] =$token;
+        return $data;
 
+    }
+
+    public static function tokenExists($token)
+    {
+        return Student::where('token', $token)->first() ? true : false;
+    }
+
+    public static function getToken($userName)
+    {
+        return Student::findOrFail($userName)->token;
+    }
+
+    public static function getUserByToken($token)
+    {
+        $data=[];
+        $time = date('Y-m-d H:i:s', time());
+        $user = Student::where('token', $token)->where('token_expired_at', '>', $time)->first();
+        if ($user) {
+            $data['user'] = $user['s_number'];
+            $data['name'] = $user['name'];
+            $data['token'] = $token;
+
+            return $data;
+        } else {
+            return [];
+        }
+
+
+
+    }
+
+    public static function renewToken($token)
+    {
+        Student::where('token', $token)->first()
+            ->update([
+                'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
+            ]);
+    }
+
+    public static function tokenInvalidate($token)
+    {
+        $time = date('Y-m-d H:i:s', time());
+        $user = Student::where('token', $token)->first();
+        if ($user)
+            $user->update([
+                'token_expired_at' => $time
+            ]);
+    }
+
+    public static function setPsw($userName, $passwd)
+    {
+        Student::where('s_number', $userName)->firstOrFail()
+            ->update([
+                'password' => md5(md5($passwd)),
+                'captcha_expired_at' => currentDatetime()
+            ]);
+    }
 
 }
