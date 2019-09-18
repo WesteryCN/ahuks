@@ -32,6 +32,7 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
 Route::middleware(['token.checkAndRenew.student'])->prefix('student')->group(function () {
     Route::get('info', 'StudentController@getinfo');
     Route::get('logout', 'StudentController@logout');
+    Route::post('setpasswd', 'StudentController@setpasswd');
 
 
 

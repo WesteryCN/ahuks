@@ -10,8 +10,6 @@ class StudentController extends Controller
 
     /**
      * 学生用户登录
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
 
     public function login(Request $request)
@@ -32,6 +30,11 @@ class StudentController extends Controller
         }
 
     }
+
+    /**
+     * 用户登录，并置cookie，便于使用postman调试
+     */
+
     public function logincookie(Request $request)
     {
         $response = $this->login($request);
@@ -44,17 +47,9 @@ class StudentController extends Controller
         }
     }
 
-
-
-    public function getinfo(Request $request)
-    {
-        $data = [];
-        $data['user'] = $request->user;
-        $data['name'] = $request->name;
-
-        return apiResponse('0', '学生信息获取成功！', $data) ;
-
-    }
+    /**
+     * 用户登出，将token失效
+     */
 
     public function logout(Request $request)
     {
@@ -74,7 +69,43 @@ class StudentController extends Controller
 
     }
 
+    /**
+     * 获取当前学生信息
+     */
 
+    public function getinfo(Request $request)
+    {
+        $data = [];
+        $data['user'] = $request->user;
+        $data['name'] = $request->name;
+
+        return apiResponse('0', '学生信息获取成功！', $data) ;
+
+    }
+
+    /**
+     * 重设当前用户密码
+     */
+
+    public function setPasswd(Request $request)
+    {
+        $data = [];
+        if(strlen( $request->input('passwd')) < 6 ){
+            return apiResponse('301', '密码过短，请设置长于6字符的密码！', $data) ;
+        }
+        $data['user']=$request->user;
+        try{
+            $re_msg = Student::setPasswd($request->user,$request->input('passwd'));
+            $data['re_msg']=$re_msg;
+            return apiResponse('0', '学生密码修改成功！', $data) ;
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+    }
 
 }
 

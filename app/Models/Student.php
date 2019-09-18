@@ -39,9 +39,14 @@ class Student extends Model{
      * @var array 序列化时隐藏的字段
      */
     protected $hidden = ['token_expired_at',];
+
+    /**
+     *登录模块，成功则置新的token
+     */
+
     public static function getUser($userName, $psw)
     {
-        $user = Student::where('s_number', $userName)->where('password', $psw)->first();
+        $user = Student::where('s_number', $userName)->where('password',md5($psw) )->first();
         if ($user) {
             $token = substr(md5(strval(uniqid()). 'ahulfx' ), 0, 16);
             $user -> update([
@@ -50,37 +55,16 @@ class Student extends Model{
             ]);
             $data=[];
             $data['user'] = $userName;
-            $data['token'] =$token;
+            $data['token'] = $token;
             return $data;
         } else {
             return [];
         }
     }
-    public static function setToken($userName)
-    {
-        $token = substr(md5(uniqid() . 'ahulfx'), 0, 16);
-        $token_msg = Student::where('s_number', $userName)->first()->update(
-            [
-                'token' => $token,
-                'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
-            ]
-        );
-        $data=[];
-        $data['user'] = $userName;
-        $data['token'] =$token;
-        return $data;
-
-    }
-
-    public static function tokenExists($token)
-    {
-        return Student::where('token', $token)->first() ? true : false;
-    }
-
-    public static function getToken($userName)
-    {
-        return Student::findOrFail($userName)->token;
-    }
+    
+    /**
+     *通过token取出用户名
+     */
 
     public static function getUserByToken($token)
     {
@@ -101,6 +85,10 @@ class Student extends Model{
 
     }
 
+    /**
+     *更新token的有效时间
+     */
+
     public static function renewToken($token)
     {
         Student::where('token', $token)->first()
@@ -108,6 +96,10 @@ class Student extends Model{
                 'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
             ]);
     }
+
+    /**
+     *使token失效
+     */
 
     public static function tokenInvalidate($token)
     {
@@ -119,12 +111,17 @@ class Student extends Model{
             ]);
     }
 
-    public static function setPsw($userName, $passwd)
+    /**
+     *重置密码模块
+     */
+
+    public static function setPasswd($userName, $passwd)
     {
+        $time = date('Y-m-d H:i:s', time());
         Student::where('s_number', $userName)->firstOrFail()
             ->update([
-                'password' => md5(md5($passwd)),
-                'captcha_expired_at' => currentDatetime()
+                'password' => md5($passwd),
+                'token_expired_at' => $time
             ]);
     }
 
