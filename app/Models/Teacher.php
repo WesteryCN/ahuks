@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Student extends Model{
+class Teacher extends Model{
     /**
      * The attributes that should be mutated to dates.
      *
@@ -22,7 +22,7 @@ class Student extends Model{
     /**
      * @var string 模型对应的数据表
      */
-    protected $table = 'student';
+    protected $table = 'teacher';
     /**
      * @var string 主键名
      */
@@ -46,7 +46,7 @@ class Student extends Model{
 
     public static function getUser($userName, $psw)
     {
-        $user = Student::where('s_number', $userName)->where('password',md5($psw) )->first();
+        $user = Teacher::where('t_number', $userName)->where('password',md5($psw) )->first();
         if ($user) {
             $token = substr(md5(strval(uniqid()). 'ahulfx' ), 0, 16);
             $user -> update([
@@ -70,9 +70,9 @@ class Student extends Model{
     {
         $data=[];
         $time = date('Y-m-d H:i:s', time());
-        $user = Student::where('token', $token)->where('token_expired_at', '>', $time)->first();
+        $user = Teacher::where('token', $token)->where('token_expired_at', '>', $time)->first();
         if ($user) {
-            $data['user'] = $user['s_number'];
+            $data['user'] = $user['t_number'];
             $data['name'] = $user['name'];
             $data['token'] = $token;
 
@@ -91,7 +91,7 @@ class Student extends Model{
 
     public static function renewToken($token)
     {
-        Student::where('token', $token)->first()
+        Teacher::where('token', $token)->first()
             ->update([
                 'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
             ]);
@@ -104,7 +104,7 @@ class Student extends Model{
     public static function tokenInvalidate($token)
     {
         $time = date('Y-m-d H:i:s', time());
-        $user = Student::where('token', $token)->first();
+        $user = Teacher::where('token', $token)->first();
         if ($user)
             $user->update([
                 'token_expired_at' => $time
@@ -118,7 +118,7 @@ class Student extends Model{
     public static function setPasswd($userName, $passwd)
     {
         $time = date('Y-m-d H:i:s', time());
-        Student::where('s_number', $userName)->firstOrFail()
+        Teacher::where('t_number', $userName)->firstOrFail()
             ->update([
                 'password' => md5($passwd),
                 'token_expired_at' => $time

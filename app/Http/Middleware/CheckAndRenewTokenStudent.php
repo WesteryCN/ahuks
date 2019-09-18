@@ -47,10 +47,6 @@ class CheckAndRenewTokenStudent
         return apiResponse('501', '系统内部错误');
     }
 
-    protected function roleErrRes()
-    {
-        return apiResponse('411', '操作权限不足');
-    }
 
     protected function tokenInvalidRes()
     {

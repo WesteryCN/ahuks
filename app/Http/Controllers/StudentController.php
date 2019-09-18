@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Student;
@@ -65,7 +64,7 @@ class StudentController extends Controller
             //return $this->internalErrRes();
         }
         $data['msg'] = $msg;
-        return apiResponse('0', '退出成功！', $data) ;
+        return apiResponse('0', '学生退出成功！', $data) ;
 
     }
 

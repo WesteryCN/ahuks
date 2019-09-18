@@ -147,7 +147,7 @@
       <option name="presentableId" value="Default" />
       <updated>1568633234622</updated>
       <workItem from="1568633247923" duration="177000" />
-      <workItem from="1568769119303" duration="13305000" />
+      <workItem from="1568769119303" duration="14681000" />
     </task>
     <servers />
   </component>
@@ -164,5 +164,38 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TeacherController.php</url>
+          <line>36</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\TeacherController" />
+            <option name="methodName" value="logincookie" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/TeacherController.php</url>
+          <line>74</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\TeacherController" />
+            <option name="methodName" value="getinfo" />
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Middleware/CheckAndRenewTokenTeacher.php</url>
+          <line>6</line>
+          <properties>
+            <option name="className" value="\App\Http\Middleware\CheckAndRenewTokenTeacher" />
+            <option name="methodName" value="handle" />
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

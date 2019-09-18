@@ -19,13 +19,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('teacher/login','TeacherController@login');
+Route::post('teacher/loginc','TeacherController@logincookie');
+
 Route::post('student/login','StudentController@login');
 Route::post('student/loginc','StudentController@logincookie');
 
 //教师管理模块
 Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(function () {
     Route::get('info', 'TeacherController@getinfo');
-
+    Route::get('logout', 'TeacherController@logout');
+    Route::post('setpasswd', 'TeacherController@setpasswd');
 
 });
 
