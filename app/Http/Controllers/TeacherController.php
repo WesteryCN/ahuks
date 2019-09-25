@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
     /**
@@ -11,7 +12,6 @@ use Illuminate\Http\Request;
      * i@2git.cn
      * i@westery.cn
      */
-
 
 class TeacherController extends Controller
 {
@@ -32,6 +32,7 @@ class TeacherController extends Controller
             else {
                 return apiResponse('301', '教师登陆失败！', $user) ;
             }
+
         }catch (\Exception $e) {
             return $e;
             //return $this->internalErrRes();
@@ -99,7 +100,7 @@ class TeacherController extends Controller
     {
         $data = [];
         if(strlen( $request->input('passwd')) < 6 ){
-            return apiResponse('301', '密码过短，请设置长于6字符的密码！', $data) ;
+            return apiResponse('401', '密码过短，请设置长于6字符的密码！', $data) ;
         }
         $data['user']=$request->user;
         try{
@@ -111,6 +112,61 @@ class TeacherController extends Controller
             return $e;
             //return $this->internalErrRes();
         }
+
+
+    }
+
+
+    /**
+     * 增加学生
+     */
+
+    public function addstd(Request $request){
+        $data = [];
+        if(!$request->input('std_user') or !$request->input('std_name') or !$request->input('std_passwd')){
+            return apiResponse('402', '用户名、姓名、密码不能为空。') ;
+        }
+        try{
+            $code = Student::addone(  $request->input('std_user'),$request->input('std_name'),$request->input('std_passwd'));
+            if($code == 1){
+                return apiResponse('401', '用户已存在。') ;
+            }else{
+                $data['std_user'] = $request->input('std_user');
+                $data['std_name'] = $request->input('std_name');
+                return apiResponse('0', '学生账号创建成功！',$data) ;
+            }
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+
+    }
+
+    /**
+     * 删除学生
+     */
+    public function delstd(Request $request){
+        $data = [];
+        if(!$request->input('std_user')){
+            return apiResponse('402', '学生学号不能为空。') ;
+        }
+        try{
+            $code = Student::delone(  $request->input('std_user'));
+            if($code == 1){
+                return apiResponse('401', '学生不存在。') ;
+            }else{
+                $data['std_user'] = $request->input('std_user');
+                return apiResponse('0', '学生删除成功！',$data) ;
+            }
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
 
 
     }

@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
     /**
      * 安徽大学数据库课程设计
      * 学生数据库部分
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
      * i@westery.cn
      */
 class Student extends Model{
+    use SoftDeletes;//启动软删除
     /**
      * The attributes that should be mutated to dates.
      *
@@ -131,4 +133,31 @@ class Student extends Model{
             ]);
     }
 
+    public static function addone($userName, $name, $passwd){
+        $user = Student::where('s_number', $userName)->first();
+        if($user ){
+            return 1;//用户已存在
+        }else{
+            $user = Student::insert([
+                's_number' => $userName,
+                'name' => $name,
+                'password' => md5($passwd),
+                'created_at' => date('Y-m-d H:i:s', time()),
+            ]);
+            return 2;//用户创建完毕
+        }
+
+    }
+
+
+    public static function delone($userName){
+        $user = Student::where('s_number', $userName)->first();
+        if($user ){
+            $user = Student::delete(['s_number' => $userName]);
+            return 2;//用户删除成功
+        }else{
+            return 1;//用户不存在
+        }
+
+    }
 }

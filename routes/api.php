@@ -29,9 +29,11 @@ Route::post('student/loginc','StudentController@logincookie');
 
 //教师管理模块
 Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(function () {
-    Route::get('info', 'TeacherController@getinfo');
-    Route::get('logout', 'TeacherController@logout');
-    Route::post('setpasswd', 'TeacherController@setpasswd');
+    Route::get('info', 'TeacherController@getinfo'); //调取信息
+    Route::get('logout', 'TeacherController@logout'); //登出
+    Route::post('setpasswd', 'TeacherController@setpasswd'); //置密码
+    Route::post('addstd', 'TeacherController@addstd'); //增加学生
+    Route::post('delstd', 'TeacherController@delstd'); //删除学生
 
 });
 
