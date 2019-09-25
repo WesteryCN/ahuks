@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
+    /**
+     * 安徽大学数据库课程设计
+     * 学生API模块
+     * by: 刘方祥
+     * i@2git.cn
+     * i@westery.cn
+     */
 class StudentController extends Controller
 {
 

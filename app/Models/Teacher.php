@@ -3,7 +3,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+    /**
+     * 安徽大学数据库课程设计
+     * 教师数据库部分
+     * by: 刘方祥
+     * i@2git.cn
+     * i@westery.cn
+     */
 class Teacher extends Model{
     /**
      * The attributes that should be mutated to dates.

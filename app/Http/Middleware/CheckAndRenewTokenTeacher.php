@@ -2,6 +2,16 @@
 namespace App\Http\Middleware;
 use Closure;
 use App\Models\Teacher;
+
+/**
+ * 安徽大学数据库课程设计
+ * 教师中间件模块
+ * by: 刘方祥
+ * i@2git.cn
+ * i@westery.cn
+ */
+
+
 class CheckAndRenewTokenTeacher
 {
     public function handle($request, Closure $next)

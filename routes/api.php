@@ -13,9 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/** 安徽大学数据库课程设计
+  * 路由部分
+  * by: 刘方祥
+  * i@2git.cn
+  * i@westery.cn
+  */
 
 
 Route::post('teacher/login','TeacherController@login');
@@ -32,6 +35,7 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
 
 });
 
+//学生管理模块
 Route::middleware(['token.checkAndRenew.student'])->prefix('student')->group(function () {
     Route::get('info', 'StudentController@getinfo');
     Route::get('logout', 'StudentController@logout');
