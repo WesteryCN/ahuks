@@ -116,6 +116,26 @@ class TeacherController extends Controller
 
     }
 
+    public function liststd(){
+        $data = [];
+        $data2 = [];
+        try{
+        $data2 = Student::liststd();
+        if ($data2['code']=='1'){
+            $data = $data2['std'];
+            return apiResponse('0', '获取学生信息成功！', $data) ;
+        }
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+
+
+    }
+
+
 
     /**
      * 增加学生

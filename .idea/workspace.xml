@@ -160,7 +160,7 @@
       <updated>1568633234622</updated>
       <workItem from="1568633247923" duration="177000" />
       <workItem from="1568769119303" duration="17679000" />
-      <workItem from="1569389914666" duration="7819000" />
+      <workItem from="1569389914666" duration="10869000" />
     </task>
     <servers />
   </component>
@@ -179,20 +179,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php-line-method">
-          <url>file://$PROJECT_DIR$/app/Http/Middleware/CheckAndRenewTokenTeacher.php</url>
-          <line>16</line>
-          <properties>
-            <option name="className" value="\App\Http\Middleware\CheckAndRenewTokenTeacher" />
-            <option name="methodName" value="handle" />
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

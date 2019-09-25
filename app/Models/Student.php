@@ -133,6 +133,26 @@ class Student extends Model{
             ]);
     }
 
+    public static function liststd(){
+        $data=[];
+        $user = Student::where('id','>','0')->get();
+        if($user){
+            $temp_i =1;
+            foreach ($user as $temp_user){
+                $data['std'][$temp_user->id] = array([
+                    's_number' => $temp_user->s_number,
+                    's_name' => $temp_user->name
+                ]);
+            }
+            $data['code']='1';
+        }
+        else{
+            $data['code']='0';
+        }
+
+        return $data;
+    }
+
     public static function addone($userName, $name, $passwd){
         $user = Student::where('s_number', $userName)->first();
         if($user ){
@@ -153,11 +173,13 @@ class Student extends Model{
     public static function delone($userName){
         $user = Student::where('s_number', $userName)->first();
         if($user ){
-            $user = Student::delete(['s_number' => $userName]);
+            $user = Student::where(['s_number' => $userName])->delete();
             return 2;//用户删除成功
         }else{
             return 1;//用户不存在
         }
 
     }
+
+
 }
