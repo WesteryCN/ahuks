@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
      * i@westery.cn
      */
 class Teacher extends Model{
+    use SoftDeletes;//启动软删除
     /**
      * The attributes that should be mutated to dates.
      *

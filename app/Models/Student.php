@@ -141,7 +141,12 @@ class Student extends Model{
             foreach ($user as $temp_user){
                 $data['std'][$temp_user->id] = array([
                     's_number' => $temp_user->s_number,
-                    's_name' => $temp_user->name
+                    's_name' => $temp_user->name,
+                    'class_id' => $temp_user->class_id,
+                    'sex' => $temp_user->sex,
+                    'grade' => $temp_user->grade,
+                    'academy' => $temp_user->academy,
+                    'email' => $temp_user->email,
                 ]);
             }
             $data['code']='1';
@@ -153,22 +158,27 @@ class Student extends Model{
         return $data;
     }
 
-    public static function addone($userName, $name, $passwd){
-        $user = Student::where('s_number', $userName)->first();
+    public static function addone($data){
+        $user = Student::where('s_number', $data['std_user'])->first();
         if($user ){
             return 1;//用户已存在
         }else{
             $user = Student::insert([
-                's_number' => $userName,
-                'name' => $name,
-                'password' => md5($passwd),
+                's_number' => $data['std_user'],
+                'name' => $data['std_name'],
+                'password' => md5($data['std_passwd']),
                 'created_at' => date('Y-m-d H:i:s', time()),
+                'class_id' => $data['std_class_id'],
+                'sex' => $data['std_sex'],
+                'grade' => $data['std_grade'],
+                'academy' => $data['std_academy'],
+                'email' => $data['std_email'],
+
             ]);
             return 2;//用户创建完毕
         }
 
     }
-
 
     public static function delone($userName){
         $user = Student::where('s_number', $userName)->first();
@@ -178,6 +188,24 @@ class Student extends Model{
         }else{
             return 1;//用户不存在
         }
+
+    }
+
+    public static function getinfo($userName){
+        $user = Student::where('s_number', $userName)->first();
+        $data=[];
+        if($user){
+            $data['s_number'] = $user->s_number;
+            $data['class_id'] = $user->class_id;
+            $data['name'] = $user->name;
+            $data['sex'] = $user->sex;
+            $data['grade'] = $user->grade;
+            $data['academy'] = $user->academy;
+            $data['email'] = $user->email;
+            //$data[''] = $user->;
+            return $data;
+        }
+        return $data;
 
     }
 

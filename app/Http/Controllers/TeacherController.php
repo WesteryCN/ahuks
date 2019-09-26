@@ -95,7 +95,6 @@ class TeacherController extends Controller
     /**
      * 重设当前用户密码
      */
-
     public function setPasswd(Request $request)
     {
         $data = [];
@@ -116,12 +115,16 @@ class TeacherController extends Controller
 
     }
 
+    /**
+     * 获取学生列表
+     */
     public function liststd(){
         $data = [];
         $data2 = [];
         try{
         $data2 = Student::liststd();
         if ($data2['code']=='1'){
+            if(sizeof($data2) >1)
             $data = $data2['std'];
             return apiResponse('0', '获取学生信息成功！', $data) ;
         }
@@ -130,12 +133,7 @@ class TeacherController extends Controller
             //return $this->internalErrRes();
         }
 
-
-
-
     }
-
-
 
     /**
      * 增加学生
@@ -147,12 +145,22 @@ class TeacherController extends Controller
             return apiResponse('402', '用户名、姓名、密码不能为空。') ;
         }
         try{
-            $code = Student::addone(  $request->input('std_user'),$request->input('std_name'),$request->input('std_passwd'));
+            $data['std_user'] = $request->input('std_user');
+            $data['std_name'] = $request->input('std_name');
+            $data['std_passwd'] = $request->input('std_passwd');
+            $data['std_class_id'] = $request->input('std_class_id');
+            $data['std_sex'] = $request->input('std_sex');
+            $data['std_grade'] = $request->input('std_grade');
+            $data['std_academy'] = $request->input('std_academy');
+            $data['std_email'] = $request->input('std_email');
+
+
+
+
+            $code = Student::addone($data);
             if($code == 1){
                 return apiResponse('401', '用户已存在。') ;
             }else{
-                $data['std_user'] = $request->input('std_user');
-                $data['std_name'] = $request->input('std_name');
                 return apiResponse('0', '学生账号创建成功！',$data) ;
             }
 

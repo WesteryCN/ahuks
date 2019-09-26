@@ -82,11 +82,13 @@ class StudentController extends Controller
     public function getinfo(Request $request)
     {
         $data = [];
-        $data['user'] = $request->user;
-        $data['name'] = $request->name;
-
-        return apiResponse('0', '学生信息获取成功！', $data) ;
-
+        try{
+            $data = Student::getinfo($request->user);
+            return apiResponse('0', '学生信息获取成功！', $data) ;
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
     }
 
     /**
