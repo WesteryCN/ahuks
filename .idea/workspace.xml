@@ -113,7 +113,9 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1QuvKKqkw1Ojst8ANhdBMg4DKea" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -162,6 +164,7 @@
       <workItem from="1568769119303" duration="17679000" />
       <workItem from="1569389914666" duration="11309000" />
       <workItem from="1569477303904" duration="3851000" />
+      <workItem from="1569564396414" duration="2863000" />
     </task>
     <servers />
   </component>
@@ -180,5 +183,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/StudentController.php</url>
+          <line>3</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -209,5 +209,29 @@ class Student extends Model{
 
     }
 
+    public static function setinfo($data){
+        $user = Student::where('s_number', $data['std_user'])->first();
+        //$data=[];
+        if($user){
+            $user = $user->update([
+                'name' => $data['std_name'],
+                'class_id' => $data['std_class_id'],
+                'sex' => $data['std_sex'],
+                'grade' => $data['std_grade'],
+                'academy' => $data['std_academy'],
+                'email' => $data['std_email'],
+
+            ]);
+
+            $data['code']='1';
+
+        }else{
+            $data['code']='0';
+        }
+
+        return $data;
+
+    }
+
 
 }

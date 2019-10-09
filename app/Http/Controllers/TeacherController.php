@@ -199,6 +199,47 @@ class TeacherController extends Controller
 
     }
 
+    /**
+     * 重设学生个人信息
+     */
+
+    public function setstdinfo(Request $request)
+    {
+        $data = [];
+        if(!$request->input('std_user') or !$request->input('std_name')){
+            return apiResponse('402', '用户名、姓名不能为空。') ;
+        }
+        //$data['user']=$request->user;
+        try{
+            $data['std_user'] = $request->input('std_user');
+            $data['std_name'] = $request->input('std_name');
+            $data['std_class_id'] = $request->input('std_class_id');
+            $data['std_sex'] = $request->input('std_sex');
+            $data['std_grade'] = $request->input('std_grade');
+            $data['std_academy'] = $request->input('std_academy');
+            $data['std_email'] = $request->input('std_email');
+
+            $code = Student::setinfo($data);
+            if($code['code'] == 1){
+                return apiResponse('0', '学生信息修改成功！',$code) ;
+
+            }else{
+                return apiResponse('401', '用户不存在。') ;
+            }
+
+
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+    }
+
+
+
+
 }
 
 
