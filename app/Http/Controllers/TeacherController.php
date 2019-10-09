@@ -104,7 +104,7 @@ class TeacherController extends Controller
         $data['user']=$request->user;
         try{
             $re_msg = Teacher::setPasswd($request->user,$request->input('passwd'));
-            $data['re_msg']=$re_msg;
+            $data['re_msg'] = $re_msg;
             return apiResponse('0', '教师密码修改成功！', $data) ;
 
         }catch (\Exception $e) {
@@ -241,11 +241,5 @@ class TeacherController extends Controller
 
 
 }
-
-
-
-
-
-
 
 ?>

@@ -101,7 +101,7 @@ class StudentController extends Controller
         if(strlen( $request->input('passwd')) < 6 ){
             return apiResponse('301', '密码过短，请设置长于6字符的密码！', $data) ;
         }
-        $data['user']=$request->user;
+        $data['user'] = $request->user;
         try{
             $re_msg = Student::setPasswd($request->user,$request->input('passwd'));
             $data['re_msg']=$re_msg;
