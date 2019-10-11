@@ -80,6 +80,7 @@ class Student extends Model{
         $time = date('Y-m-d H:i:s', time());
         $user = Student::where('token', $token)->where('token_expired_at', '>', $time)->first();
         if ($user) {
+            $data['id'] = $user['id'];
             $data['user'] = $user['s_number'];
             $data['name'] = $user['name'];
             $data['token'] = $token;
@@ -133,7 +134,31 @@ class Student extends Model{
             ]);
     }
 
-    public static function liststd(){
+    public static function liststd($class_id){
+        if($class_id != -1){
+            $data=[];
+            $user = Student::where('id','>','0')->where('class_id','=',$class_id) ->get();
+            if($user){
+                $temp_i =1;
+                foreach ($user as $temp_user){
+                    $data['std'][$temp_user->id] = array([
+                        's_number' => $temp_user->s_number,
+                        's_name' => $temp_user->name,
+                        'class_id' => $temp_user->class_id,
+                        'sex' => $temp_user->sex,
+                        'grade' => $temp_user->grade,
+                        'academy' => $temp_user->academy,
+                        'email' => $temp_user->email,
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+
+            return $data;
+        }
         $data=[];
         $user = Student::where('id','>','0')->get();
         if($user){

@@ -79,6 +79,7 @@ class Teacher extends Model{
         $time = date('Y-m-d H:i:s', time());
         $user = Teacher::where('token', $token)->where('token_expired_at', '>', $time)->first();
         if ($user) {
+            $data['id'] = $user['id'];
             $data['user'] = $user['t_number'];
             $data['name'] = $user['name'];
             $data['token'] = $token;
@@ -131,5 +132,24 @@ class Teacher extends Model{
                 'token_expired_at' => $time
             ]);
     }
+
+    public static function getTeacherInfoById($t_id){
+        $user = Teacher::where('id','=' ,$t_id)->first();
+        $data = ['code' => '0'];
+        if ($user)
+            $data = [
+                't_id' => $user ->id,
+                't_number' => $user -> t_number,
+                'name' => $user ->name,
+                'code' => '1',
+            ];
+
+        return $data;
+    }
+
+
+
+
+
 
 }

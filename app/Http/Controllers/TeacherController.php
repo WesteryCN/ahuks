@@ -78,19 +78,6 @@ class TeacherController extends Controller
 
     }
 
-    /**
-     * 获取当前教师信息
-     */
-
-    public function getinfo(Request $request)
-    {
-        $data = [];
-        $data['user'] = $request->user;
-        $data['name'] = $request->name;
-
-        return apiResponse('0', '教师信息获取成功！', $data) ;
-
-    }
 
     /**
      * 重设当前用户密码
@@ -118,11 +105,15 @@ class TeacherController extends Controller
     /**
      * 获取学生列表
      */
-    public function liststd(){
+
+    public function liststd(Request $request){
+        $class_id = $request ->input('c_id');
+        if ($class_id ==  null)
+            $class_id = -1;
         $data = [];
         $data2 = [];
         try{
-        $data2 = Student::liststd();
+        $data2 = Student::liststd($class_id);
         if ($data2['code']=='1'){
             if(sizeof($data2) >1)
             $data = $data2['std'];
@@ -238,6 +229,29 @@ class TeacherController extends Controller
     }
 
 
+    /**
+     * 获取教师信息 by id
+     */
+    public function getTeacherInfo(Request $request){
+        $data = [];
+        $t_id = $request -> input('t_id');
+        if($t_id == null)
+            $t_id = $request->id;
+        try{
+            $data = Teacher::getTeacherInfoById($t_id);
+            if($data['code']=='1'){
+                return apiResponse('0', '教师信息获取成功！', $data) ;
+            }else{
+                return apiResponse('401', '教师信息不存在！', $data) ;
+            }
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+    }
 
 
 }

@@ -40,6 +40,7 @@ class CheckAndRenewTokenTeacher
             return $this->internalErrRes();
         }
         $data = [
+            'id' => $user['id'],
             'user' => $user['user'],
             'name' => $user['name'],
             'token' => $user['token']

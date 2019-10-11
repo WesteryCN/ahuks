@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 class ClassController extends Controller
 {
 
+    public static function getinfo(Request $request){
+        $data = [];
+        try{
+
+            return apiResponse('0', '班级信息获取成功！', $data) ;
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+    }
+
 
 
 
