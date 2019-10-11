@@ -1,6 +1,8 @@
 <?php
+namespace App\Http\Controllers;
 
 use App\Models\Classid;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 /**
@@ -16,8 +18,16 @@ class ClassController extends Controller
     public static function getinfo(Request $request){
         $data = [];
         try{
-
-            return apiResponse('0', '班级信息获取成功！', $data) ;
+            $class_id = $request ->input('c_id');
+            if($class_id == null){
+                $class_id = -1;
+            }
+            $data = Classid::listclass($class_id);
+            if($data['code'] == '1'){
+                return apiResponse('0', '班级信息获取成功！', $data) ;
+            }else{
+                return apiResponse('401', '班级不存在！', $data) ;
+            }
         }catch (\Exception $e) {
             return $e;
             //return $this->internalErrRes();

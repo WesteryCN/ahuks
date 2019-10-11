@@ -230,7 +230,7 @@ class TeacherController extends Controller
 
 
     /**
-     * 获取教师信息 by id
+     * 获取教师信息
      */
     public function getTeacherInfo(Request $request){
         $data = [];

@@ -32,10 +32,14 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
     Route::post('info', 'TeacherController@getTeacherInfo'); //调取教师信息
     Route::get('logout', 'TeacherController@logout'); //登出
     Route::post('setpasswd', 'TeacherController@setpasswd'); //置密码
+    Route::get('liststd', 'TeacherController@liststd'); //列出所有学生
     Route::post('liststd', 'TeacherController@liststd'); //列出所有学生
     Route::post('addstd', 'TeacherController@addstd'); //增加学生
     Route::post('delstd', 'TeacherController@delstd'); //删除学生
     Route::post('setstdinfo', 'TeacherController@setstdinfo'); //修改学生信息
+
+    Route::post('getclass', 'ClassController@getinfo'); //列出班级
+    Route::get('getclass', 'ClassController@getinfo'); //列出班级
 
     Route::post('sendemail', 'SendEmailController@send'); //发送邮件
 

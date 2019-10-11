@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -55,24 +56,52 @@ class Classid extends Model
     protected $hidden = [];
 
 
-    public static function listclass(){
-        $data=[];
-        $user = Classid::where('id','>','0')->get();
-        if($user){
-            $temp_i =1;
-            foreach ($user as $temp_user){
-                $data['class'][$temp_user->id] = array([
-                    'class_name' => $temp_user->name,
-                    't_id' => $temp_user->t_id,
-                ]);
+    public static function listclass($class_id){
+        if($class_id == -1){ //列出全部班级
+            $data=['code'=>'0'];
+            $user = Classid::where('id','>','0')->get();
+            if($user){
+
+                foreach ($user as $temp_user){
+                    $t_temp = Teacher::getTeacherInfoById($temp_user ->t_id);
+
+                    $data['class'][$temp_user->id] = array([
+                        'class_name' => $temp_user->name,
+                        't_id' => $temp_user->t_id,
+                        //'t_info' => $t_temp,
+                        't_name' => $t_temp['name'],
+                    ]);
+                }
+                $data['code']='1';
             }
-            $data['code']='1';
-        }
-        else{
-            $data['code']='0';
+            else{
+                $data['code']='0';
+            }
+
+            return $data;
+
+        }else{
+            $data=['code'=>'0'];
+            $user2 = Classid::where('id','=',$class_id)->first();
+            if($user2){
+                $t_temp = Teacher::getTeacherInfoById($user2 ->t_id);
+                $data['class'][$user2->id] = [
+                    'class_name' => $user2->name,
+                    't_id' => $user2->t_id,
+                   // 't_info' => $t_temp,
+                    't_name' => $t_temp['name'],
+                ];
+
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+
+            return $data;
+
         }
 
-        return $data;
     }
 
 

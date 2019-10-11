@@ -133,6 +133,10 @@ class Teacher extends Model{
             ]);
     }
 
+    /**
+     * 通过id 获取教师信息
+     */
+
     public static function getTeacherInfoById($t_id){
         $user = Teacher::where('id','=' ,$t_id)->first();
         $data = ['code' => '0'];
