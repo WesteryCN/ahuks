@@ -43,6 +43,12 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
     Route::post('addclass', 'ClassController@addclass'); //添加班级
     Route::post('delclass', 'ClassController@delclass'); //删除班级
 
+    Route::post('addexam', 'ExamController@addexam'); //添加考试
+    Route::get('listexam', 'ExamController@listexam'); //列出考试
+    Route::post('listexam', 'ExamController@listexam'); //列出考试
+    Route::post('delexam', 'ExamController@delexam'); //删除考试
+
+
     Route::post('sendemail', 'SendEmailController@send'); //发送邮件
 
 

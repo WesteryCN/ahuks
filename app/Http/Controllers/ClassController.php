@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
  */
 class ClassController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Exception|\Illuminate\Http\JsonResponse
+     * 获取班级信息
+     */
 
     public static function getinfo(Request $request){
         $data = [];
@@ -36,6 +41,11 @@ class ClassController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Exception|\Illuminate\Http\JsonResponse
+     * 添加班级
+     */
 
     public function addclass(Request $request){
         $data = [];
@@ -67,6 +77,12 @@ class ClassController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Exception|\Illuminate\Http\JsonResponse
+     * 删除班级
+     */
+
     public function delclass(Request $request)
     {
         $data = [];
@@ -93,6 +109,7 @@ class ClassController extends Controller
 
 
     }
+
 
 
 }

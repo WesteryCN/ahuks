@@ -56,6 +56,12 @@ class Classid extends Model
     protected $hidden = [];
 
 
+    /**
+     * @param $class_id
+     * @return array
+     * 列出班级
+     */
+
     public static function listclass($class_id){
         if($class_id == -1){ //列出全部班级
             $data=['code'=>'0'];
@@ -104,6 +110,13 @@ class Classid extends Model
 
     }
 
+    /**
+     * @param $class_id
+     * @param $class_name
+     * @param $teacher_id
+     * @return array
+     * 添加班级
+     */
 
     public static function addclass($class_id,$class_name,$teacher_id){
         $data=['code'=>'0'];
@@ -124,6 +137,12 @@ class Classid extends Model
 
     }
 
+    /**
+     * @param $class_id
+     * @return array
+     * 删除班级
+     */
+
     public static function delclass($class_id){
         $data=['code'=>'0'];
         $user = Classid::where('id','=',$class_id)->first();
@@ -136,6 +155,24 @@ class Classid extends Model
 
 
     }
+
+    /**
+     * @param $class_id
+     * @return int
+     * 检查班级是否存在
+     */
+
+    public static function isreal($class_id){
+        $user = Classid::where('id','=',$class_id)->first();
+        if($user){
+            return 1;
+        }
+        return 0;
+    }
+
+
+
+
 
 
 
