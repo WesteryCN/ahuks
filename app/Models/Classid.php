@@ -19,7 +19,7 @@ class Classid extends Model
 {
 
 
-    use SoftDeletes;//启动软删除
+    //use SoftDeletes;//启动软删除
     /**
      * The attributes that should be mutated to dates.
      *
@@ -104,6 +104,38 @@ class Classid extends Model
 
     }
 
+
+    public static function addclass($class_id,$class_name,$teacher_id){
+        $data=['code'=>'0'];
+        $user = Classid::where('id','=',$class_id)->first();
+        if(!$user){
+            Classid::insert([
+                'id' => $class_id,
+                'name' => $class_name,
+                't_id' => $teacher_id,
+            ]);
+            $data['code']=1;
+            return $data;
+
+        }else{
+            return $data;
+        }
+
+
+    }
+
+    public static function delclass($class_id){
+        $data=['code'=>'0'];
+        $user = Classid::where('id','=',$class_id)->first();
+        if($user){
+            $data['code']=1;
+            $user->delete();
+
+        }
+        return $data;
+
+
+    }
 
 
 
