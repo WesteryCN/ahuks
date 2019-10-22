@@ -42,6 +42,15 @@ class ClassExam extends Model
      */
     protected $hidden = [];
 
+    public static function isreal($exam_id,$class_id){
+        $user = ClassExam::where('exam_id','=',$exam_id)->where('class_id','=',$class_id)->first();
+        if($user){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     public static function linkexam($exam_id,$class_id){
         $user = ClassExam::where('exam_id','=',$exam_id)->where('class_id','=',$class_id)->first();
         if($user){
@@ -84,8 +93,9 @@ class ClassExam extends Model
                         'id' => $temp_exam->id,
                         'class_id' => $temp_exam->class_id,
                         'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
-                        'exam_id' => $temp_exam->exam_id,
-                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        //'exam_id' => $temp_exam->exam_id,
+                        //'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        'exam_info' => Exam::listexam($temp_exam->exam_id)['exam'][$temp_exam->exam_id],
 
                     ]);
                 }
@@ -105,8 +115,9 @@ class ClassExam extends Model
                         'id' => $temp_exam->id,
                         'class_id' => $temp_exam->class_id,
                         'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
-                        'exam_id' => $temp_exam->exam_id,
-                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        //'exam_id' => $temp_exam->exam_id,
+                        //'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        'exam_info' => Exam::listexam($temp_exam->exam_id)['exam'][$temp_exam->exam_id],
 
                     ]);
                 }
@@ -126,8 +137,9 @@ class ClassExam extends Model
                         'id' => $temp_exam->id,
                         'class_id' => $temp_exam->class_id,
                         'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
-                        'exam_id' => $temp_exam->exam_id,
-                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        //'exam_id' => $temp_exam->exam_id,
+                        //'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        'exam_info' => Exam::listexam($temp_exam->exam_id)['exam'][$temp_exam->exam_id],
 
                     ]);
                 }
@@ -147,8 +159,9 @@ class ClassExam extends Model
                         'id' => $temp_exam->id,
                         'class_id' => $temp_exam->class_id,
                         'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
-                        'exam_id' => $temp_exam->exam_id,
-                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        //'exam_id' => $temp_exam->exam_id,
+                        //'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        'exam_info' => Exam::listexam($temp_exam->exam_id)['exam'][$temp_exam->exam_id],
 
                     ]);
                 }

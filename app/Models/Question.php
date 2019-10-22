@@ -165,4 +165,40 @@ class Question extends Model
 
     }
 
+    public static function listmyquestion($exam_id){
+        $data = [];
+        $data['code'] = 0;
+
+        $questions = Question::where('exam_id','=',$exam_id)->get();
+        if($questions) {
+            $data['code'] = 1;
+            $data['exam_id'] = $exam_id;
+            foreach ($questions as $temp_question) {
+                $data['questions'][$temp_question->q_rank] = array([
+                    'q_title' => $temp_question->q_title,
+                    'q_answers'=>  json_decode($temp_question->q_answers) ,
+                    'type' => $temp_question->type,
+                    'q_mark' =>$temp_question->q_mark,
+                    'q_rank' => $temp_question->q_rank,
+                    //'right_answer' => $temp_question->right_answer,
+                ]);
+            }
+
+            return $data;
+
+
+
+        }
+
+
+
+
+        return 1;
+
+
+
+
+    }
+
+
 }

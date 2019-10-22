@@ -61,6 +61,7 @@ class Teacher extends Model{
                 'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
             ]);
             $data=[];
+            $data['id'] = $user ->id;
             $data['user'] = $userName;
             $data['token'] = $token;
             return $data;

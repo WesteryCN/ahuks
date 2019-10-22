@@ -90,10 +90,10 @@ class Exam extends Model
     public static function listexam($exam_id){
         if($exam_id != -1){
             $data=[];
-            $exam = Exam::where('id','=',$exam_id) ->get();
-            if($exam){
-                $temp_i =1;
-                foreach ($exam as $temp_exam){
+            $temp_exam = Exam::where('id','=',$exam_id) ->first();
+            if($temp_exam){
+
+
                     $data['exam'][$temp_exam->id] = array([
                         'id' => $temp_exam->id,
                         'name' => $temp_exam->name,
@@ -103,7 +103,7 @@ class Exam extends Model
                         'note' => $temp_exam->note,
 
                     ]);
-                }
+
                 $data['code']='1';
             }
             else{
@@ -147,6 +147,8 @@ class Exam extends Model
         }
 
     }
+
+
 
 
 }

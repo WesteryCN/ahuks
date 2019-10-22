@@ -68,9 +68,13 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
 
 //学生管理模块
 Route::middleware(['token.checkAndRenew.student'])->prefix('student')->group(function () {
-    Route::get('info', 'StudentController@getinfo');
-    Route::get('logout', 'StudentController@logout');
-    Route::post('setpasswd', 'StudentController@setpasswd');
+    Route::get('info', 'StudentController@getinfo'); //获取信息
+    Route::get('logout', 'StudentController@logout'); //登出
+    Route::post('setpasswd', 'StudentController@setpasswd'); //修改密码
+
+
+    Route::get('getexam', 'StudentExamController@getmyexam'); //获取我的考试
+    Route::post('getquestion', 'StudentExamController@getmyexamquestion'); //获取考试考题
 
 
 

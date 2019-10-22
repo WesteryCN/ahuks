@@ -140,9 +140,9 @@ class ExamController extends Controller
         try{
             $data = ClassExam::listlink($exam_id ,$class_id );
             if($data['code']=='1'){
-                return apiResponse('0', '列出考试关联成功。',$data['exam']);
+                return apiResponse('0', '列出考试关联成功。',$data);
             }else{
-                return apiResponse('402', '考试关联为空。',$data['exam']);
+                return apiResponse('402', '考试关联为空。',$data);
             }
 
 

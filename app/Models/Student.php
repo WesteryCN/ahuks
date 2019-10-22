@@ -62,6 +62,7 @@ class Student extends Model{
                 'token_expired_at' => date('Y-m-d H:i:s', time() + 36000)
             ]);
             $data=[];
+            $data['id'] = $user ->id;
             $data['user'] = $userName;
             $data['token'] = $token;
             return $data;
@@ -222,12 +223,12 @@ class Student extends Model{
         if($user){
             $data['s_number'] = $user->s_number;
             $data['class_id'] = $user->class_id;
+            $data['class_name'] = Classid::getnamebyid($user->class_id);
             $data['name'] = $user->name;
             $data['sex'] = $user->sex;
             $data['grade'] = $user->grade;
             $data['academy'] = $user->academy;
             $data['email'] = $user->email;
-            //$data[''] = $user->;
             return $data;
         }
         return $data;
@@ -259,4 +260,14 @@ class Student extends Model{
     }
 
 
+    public static function getclassid($userName){
+        $user = Student::where('s_number', $userName)->first();
+        $data = 0;
+        if($user){
+            $data = $user->class_id;
+        }
+        return $data;
+
+
+    }
 }
