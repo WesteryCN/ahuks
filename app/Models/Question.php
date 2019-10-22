@@ -53,17 +53,107 @@ class Question extends Model
     }
 
     public static function addquestion($data){
+         if(Question::isexist($data['exam_id'],$data['q_rank'])){
+             return 0;
+         }
+         $question = Question::insert([
+             'exam_id' => $data['exam_id'],
+             'q_title' => $data['q_title'],
+             'q_answers'=> $data['q_answers'],
+             'type' => $data['type'],
+             'q_mark' => $data['q_mark'],
+             'q_rank' => $data['q_rank'],
+             'right_answer' => $data['right_answer'],
+         ]);
+         return 1;
+
+
 
 
     }
 
 
+    public static function leftscore($exam_id){
+        $data = [];
+        $data['code'] = 0;
+
+        $questions = Question::where('exam_id','=',$exam_id)->get();
+        if($questions) {
+            $data['code'] = 1;
+            $total_score = 0;
+            foreach ($questions as $temp_question) {
+                $total_score =$total_score + $temp_question->q_mark;
+            }
+            $exam = Exam::where('id', $exam_id)->first();
+            $exam_score = $exam -> total_score;
+
+            $data['left_score'] = $exam_score - $total_score ;
+            return $data;
+
+
+
+        }
 
 
 
 
+        return 1;
 
 
 
+
+    }
+
+    public static function listquestion($exam_id){
+        $data = [];
+        $data['code'] = 0;
+
+        $questions = Question::where('exam_id','=',$exam_id)->get();
+        if($questions) {
+            $data['code'] = 1;
+            $data['exam_id'] = $exam_id;
+            foreach ($questions as $temp_question) {
+                $data['questions'][$temp_question->q_rank] = array([
+                    'q_title' => $temp_question->q_title,
+                    'q_answers'=>  json_decode($temp_question->q_answers) ,
+                    'type' => $temp_question->type,
+                    'q_mark' =>$temp_question->q_mark,
+                    'q_rank' => $temp_question->q_rank,
+                    'right_answer' => $temp_question->right_answer,
+                ]);
+            }
+
+            return $data;
+
+
+
+        }
+
+
+
+
+        return 1;
+
+
+
+
+    }
+
+    public static function delquestion($exam_id,$q_rank){
+        $data = [];
+        $data['code'] =0;
+        if($q_rank == -1){
+            $questions = Question::where('exam_id','=',$exam_id)->get();
+            if($questions){
+                foreach ($questions as $temp_question){
+                    $temp_question ->delete();
+                }
+                $data['code'] =1;
+            }
+            return $data;
+        }
+
+
+    }
 
 }

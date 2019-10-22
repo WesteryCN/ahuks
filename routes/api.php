@@ -53,6 +53,11 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
     Route::post('listlink', 'ExamController@listlink'); //列出关联
     Route::post('dellink', 'ExamController@dellink'); //删除考试
 
+    Route::post('addques', 'QuestionController@addquestion'); //添加考题
+    Route::post('delques', 'QuestionController@delquestion'); //删除考题
+    Route::post('leftscore', 'QuestionController@leftscore'); //考试剩余分数
+    Route::post('listques', 'QuestionController@listquestion'); //列出考题
+
 
 
 
