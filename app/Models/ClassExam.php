@@ -42,6 +42,129 @@ class ClassExam extends Model
      */
     protected $hidden = [];
 
+    public static function linkexam($exam_id,$class_id){
+        $user = ClassExam::where('exam_id','=',$exam_id)->where('class_id','=',$class_id)->first();
+        if($user){
+            return 0;
+        }else{
+            ClassExam::insert([
+                'exam_id' => $exam_id,
+                'class_id' => $class_id,
+
+            ]);
+            return 1;
+        }
+
+
+
+    }
+
+    public static function dellink($link_id){
+        $user = ClassExam::where('id','=',$link_id)->first();
+        if(!$user){
+            return 0;
+        }else{
+            $user->delete();
+            return 1;
+        }
+
+
+
+    }
+
+    public static function listlink($exam_id,$class_id){
+        $data =[];
+        $data['code']='0';
+        if( ($exam_id != -1) and ($class_id != -1)){
+            $data=[];
+            $exam = ClassExam::where('exam_id','=',$exam_id)->where('class_id','=',$class_id) ->get();
+            if($exam){
+                foreach ($exam as $temp_exam){
+                    $data['exam'][$temp_exam->id] = array([
+                        'id' => $temp_exam->id,
+                        'class_id' => $temp_exam->class_id,
+                        'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
+                        'exam_id' => $temp_exam->exam_id,
+                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+            return $data;
+        }
+        if( ($exam_id == -1) and ($class_id == -1)){
+            $data=[];
+            $exam = ClassExam::where('id','>','0') ->get();
+            if($exam){
+                foreach ($exam as $temp_exam){
+                    $data['exam'][$temp_exam->id] = array([
+                        'id' => $temp_exam->id,
+                        'class_id' => $temp_exam->class_id,
+                        'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
+                        'exam_id' => $temp_exam->exam_id,
+                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+            return $data;
+        }
+        if( ($exam_id == -1) and ($class_id != -1)){
+            $data=[];
+            $exam = ClassExam::where('exam_id','>','0')->where('class_id','=',$class_id) ->get();
+            if($exam){
+                foreach ($exam as $temp_exam){
+                    $data['exam'][$temp_exam->id] = array([
+                        'id' => $temp_exam->id,
+                        'class_id' => $temp_exam->class_id,
+                        'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
+                        'exam_id' => $temp_exam->exam_id,
+                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+            return $data;
+        }
+        if( ($exam_id != -1) and ($class_id == -1)){
+            $data=[];
+            $exam = ClassExam::where('exam_id','=',$exam_id)->where('class_id','>','0') ->get();
+            if($exam){
+                foreach ($exam as $temp_exam){
+                    $data['exam'][$temp_exam->id] = array([
+                        'id' => $temp_exam->id,
+                        'class_id' => $temp_exam->class_id,
+                        'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
+                        'exam_id' => $temp_exam->exam_id,
+                        'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+            return $data;
+        }
+
+
+
+
+    }
+
 
 
 

@@ -42,6 +42,21 @@ class Question extends Model
      */
     protected $hidden = [];
 
+    public static function isexist($exam_id,$q_rank){
+        if( Question::where('exam_id','=',$exam_id) ->where('q_rank','=',$q_rank) ->first()){
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+    }
+
+    public static function addquestion($data){
+
+
+    }
+
 
 
 

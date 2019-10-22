@@ -58,6 +58,14 @@ class Exam extends Model
         return 0;
     }
 
+    public static function getnamebyid($exam_id){
+        $user = Exam::where('id','=',$exam_id)->first();
+        if($user){
+            return $user->name;
+        }
+        return 0;
+    }
+
 
     public static function addexam($data){
         $exam = Exam::where('name', $data['exam_name'])->first();

@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassExam;
 use App\Models\Classid;
 use App\Models\Exam;
 
@@ -95,6 +96,86 @@ class ExamController extends Controller
 
 
     }
+
+    public function linkexam(Request $request){
+        $data = [];
+        if(!$request->input('exam_id') or !$request->input('class_id') ){
+            return apiResponse('402', '考试id、班级id不能为空。') ;
+        }
+        if(!Exam::isreal( $request->input('exam_id') )){
+            return apiResponse('402', '考试id不存在。') ;
+        }
+        if( !Classid::isreal($request->input('class_id'))){
+            return apiResponse('402', '班级id不存在。') ;
+        }
+        try{
+            if(ClassExam::linkexam($request->input('exam_id'),$request->input('class_id'))){
+                return apiResponse('0', '考试关联成功。');
+            }else{
+                return apiResponse('402', '考试已关联。');
+            }
+
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+
+    }
+
+    public function listlink(Request $request){
+        $data = [];
+        if(!$request->input('exam_id') ){
+            $exam_id = -1;
+        }else{
+            $exam_id = $request->input('exam_id');
+        }
+        if(!$request->input('class_id') ){
+            $class_id = -1;
+        }else{
+            $class_id = $request->input('class_id');
+        }
+        try{
+            $data = ClassExam::listlink($exam_id ,$class_id );
+            if($data['code']=='1'){
+                return apiResponse('0', '列出考试关联成功。',$data['exam']);
+            }else{
+                return apiResponse('402', '考试关联为空。',$data['exam']);
+            }
+
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+    }
+
+    public function dellink(Request $request){
+        $data = [];
+        if(!$request->input('link_id')){
+            return apiResponse('402', '关联考试的id不能为空。') ;
+        }
+        try{
+            if(ClassExam::dellink($request->input('link_id'))){
+                return apiResponse('0', '删除考试关联成功。');
+            }else{
+                return apiResponse('402', '考试关联不存在。');
+            }
+
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+
+    }
+
 
 
 }

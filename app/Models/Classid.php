@@ -55,6 +55,14 @@ class Classid extends Model
      */
     protected $hidden = [];
 
+    public static function getnamebyid($class_id){
+        $user = Classid::where('id','=',$class_id)->first();
+        if($user){
+            return $user->name;
+        }
+        return 0;
+    }
+
 
     /**
      * @param $class_id
