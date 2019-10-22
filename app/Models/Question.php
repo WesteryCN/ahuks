@@ -151,6 +151,15 @@ class Question extends Model
                 $data['code'] =1;
             }
             return $data;
+        }else{
+            if($q_rank != -1){
+                $question = Question::where('exam_id','=',$exam_id)->where('q_rank','=',$q_rank)->first();
+                if($question){
+                    $question ->delete();
+                    $data['code'] =1;
+                }
+                return $data;
+            }
         }
 
 
