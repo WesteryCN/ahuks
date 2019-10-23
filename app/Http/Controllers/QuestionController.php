@@ -30,11 +30,11 @@ class QuestionController extends Controller
         try{
             $data['exam_id'] = $request->input('exam_id');
             $data['q_title'] = $request->input('q_title');
-            $data['q_answers'] = $request->input('q_answers');
+            $data['q_answers'] =(array) $request->input('q_answers');
             $data['type'] = $request->input('q_type');
             $data['q_mark'] = $request->input('q_mark');
             $data['q_rank'] = $request->input('q_rank');
-            $data['right_answer'] = $request->input('right_answer');
+            $data['right_answer'] = (array)$request->input('right_answer');
 
             $data2 = Question::addquestion($data);
 
@@ -127,5 +127,8 @@ class QuestionController extends Controller
 
 
     }
+
+
+
 
 }

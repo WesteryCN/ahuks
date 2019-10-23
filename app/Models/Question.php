@@ -42,6 +42,12 @@ class Question extends Model
      */
     protected $hidden = [];
 
+    protected $casts = [
+        'q_answers' => 'array',
+        'right_answer'=> 'array',
+        'stu_ans' => 'array'
+    ];
+
     public static function isexist($exam_id,$q_rank){
         if( Question::where('exam_id','=',$exam_id) ->where('q_rank','=',$q_rank) ->first()){
             return 1;
@@ -49,14 +55,14 @@ class Question extends Model
             return 0;
         }
 
-
     }
 
     public static function addquestion($data){
          if(Question::isexist($data['exam_id'],$data['q_rank'])){
              return 0;
          }
-         $question = Question::insert([
+         //print_r($data);
+         $question = Question::Create([
              'exam_id' => $data['exam_id'],
              'q_title' => $data['q_title'],
              'q_answers'=> $data['q_answers'],
@@ -113,9 +119,10 @@ class Question extends Model
             $data['code'] = 1;
             $data['exam_id'] = $exam_id;
             foreach ($questions as $temp_question) {
-                $data['questions'][$temp_question->q_rank] = array([
+                $data['questions'][$temp_question->id] = array([
+                    'q_id' => $temp_question->id,
                     'q_title' => $temp_question->q_title,
-                    'q_answers'=>  json_decode($temp_question->q_answers) ,
+                    'q_answers'=>  $temp_question->q_answers ,
                     'type' => $temp_question->type,
                     'q_mark' =>$temp_question->q_mark,
                     'q_rank' => $temp_question->q_rank,
@@ -174,9 +181,10 @@ class Question extends Model
             $data['code'] = 1;
             $data['exam_id'] = $exam_id;
             foreach ($questions as $temp_question) {
-                $data['questions'][$temp_question->q_rank] = array([
+                $data['questions'][$temp_question->id] = array([
+                    'q_id' => $temp_question->id,
                     'q_title' => $temp_question->q_title,
-                    'q_answers'=>  json_decode($temp_question->q_answers) ,
+                    'q_answers'=>  $temp_question->q_answers ,
                     'type' => $temp_question->type,
                     'q_mark' =>$temp_question->q_mark,
                     'q_rank' => $temp_question->q_rank,

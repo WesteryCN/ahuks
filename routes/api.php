@@ -74,8 +74,9 @@ Route::middleware(['token.checkAndRenew.student'])->prefix('student')->group(fun
 
 
     Route::get('getexam', 'StudentExamController@getmyexam'); //获取我的考试
+    Route::post('startask', 'StudentExamController@startask'); //开始答题考题
     Route::post('getquestion', 'StudentExamController@getmyexamquestion'); //获取考试考题
-
+    Route::post('endask', 'StudentExamController@endask'); //结束答题并提交答案
 
 
 });
