@@ -7,21 +7,22 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Models\Email;
+use App\Models\StudentAnswer;
 
-class Sendemail implements ShouldQueue
+class Judge implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $data =[];
+    protected $s_id,$exam_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($s_id,$exam_id)
     {
-        $this ->data =$data;
+        $this ->s_id = $s_id;
+        $this ->exam_id = $exam_id;
     }
 
     /**
@@ -31,9 +32,6 @@ class Sendemail implements ShouldQueue
      */
     public function handle()
     {
-        //echo $this ->data['info'];
-        //echo $this ->data['server'];
-        Email::addinfo($this->data);
-
+        StudentAnswer::judgeask($this ->s_id,$this ->exam_id);
     }
 }

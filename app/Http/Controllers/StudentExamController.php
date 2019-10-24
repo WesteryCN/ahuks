@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\Judge;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\ClassExam;
@@ -95,6 +96,7 @@ class StudentExamController extends Controller
             $stu_ans =$request->input('stu_ans');
             $data = StudentExam::endask($request->id,$exam_id,$stu_ans,$cheat);
             if($data == 1){
+
                 return apiResponse('0', '提交考试结束请求成功！') ;
             }else{
                 return apiResponse('402', '考试尚未开始！',$data) ;

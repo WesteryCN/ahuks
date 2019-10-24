@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Jobs\Judge;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentAnswer extends Model
@@ -52,15 +53,48 @@ class StudentAnswer extends Model
             ],[
                 'answer' => $temp_ans
             ]);
+
         }
+        Judge::dispatch($s_id,$exam_id);
+        //return Self::judgeask($s_id,$exam_id);
+        return 1;
+    }
+
+    public static function judgeask($s_id,$exam_id){
+        $data=[];
+        $iscorrect = 0;
+        $tol_mark = 0;
+        $t_ask = StudentAnswer::where('s_id',$s_id)->where('exam_id',$exam_id)->get();
+        foreach ($t_ask as $temp_ask){
+            $q_id = $temp_ask ->q_id;
+            $t_ans = $temp_ask ->answer;
+            $right = Question::where('id',$q_id)->first();
+            $right_ans = $right->right_answer;
+            $right_mark = $right ->q_mark;
+            if($t_ans == $right_ans){
+                $iscorrect = 1;
+                $tol_mark = $tol_mark + $right_mark;
+            }else{
+                $iscorrect = 0;
+            }
+            $temp_ask ->update([
+                's_right'=>$iscorrect,
+            ]);
+
+            //$data[$q_id]['t_ans'] = $t_ans;
+            //$data[$q_id]['right_ans'] = $right_ans;
+            //$data[$q_id]['is'] = $iscorrect;
+        }
+        StudentExam::where('s_id',$s_id)->where('exam_id',$exam_id)->first()->update([
+            'score' => $tol_mark,
+        ]);
+
         return 1;
 
 
 
 
-
     }
-
 
 
 
