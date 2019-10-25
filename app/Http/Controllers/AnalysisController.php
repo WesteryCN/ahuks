@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\StudentExam;
 use App\Http\Controllers\Controller;
 
-class StudentAnswerController extends Controller
+class AnalysisController extends Controller
 {
+
+
 
 
 

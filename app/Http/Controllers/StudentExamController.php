@@ -76,7 +76,6 @@ class StudentExamController extends Controller
 
     }
 
-
     //结束答题并提交答案
     public static function endask(Request $request){
         $data = [];

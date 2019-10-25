@@ -63,6 +63,8 @@ class StudentAnswer extends Model
     public static function judgeask($s_id,$exam_id){
         $data=[];
         $iscorrect = 0;
+        $mark_a =0;
+        $mark_b =0;
         $tol_mark = 0;
         $t_ask = StudentAnswer::where('s_id',$s_id)->where('exam_id',$exam_id)->get();
         foreach ($t_ask as $temp_ask){
@@ -70,10 +72,16 @@ class StudentAnswer extends Model
             $t_ans = $temp_ask ->answer;
             $right = Question::where('id',$q_id)->first();
             $right_ans = $right->right_answer;
-            $right_mark = $right ->q_mark;
+            $right_mark = $right->q_mark;
+            $right_type = $right->type;
             if($t_ans == $right_ans){
                 $iscorrect = 1;
-                $tol_mark = $tol_mark + $right_mark;
+                if($right_type == 0){
+                    $mark_a =$mark_a +$right_mark;
+                }else{
+                    $mark_b =$mark_b +$right_mark;
+                }
+
             }else{
                 $iscorrect = 0;
             }
@@ -85,8 +93,12 @@ class StudentAnswer extends Model
             //$data[$q_id]['right_ans'] = $right_ans;
             //$data[$q_id]['is'] = $iscorrect;
         }
+        $tol_mark = $mark_a +$mark_b;
         StudentExam::where('s_id',$s_id)->where('exam_id',$exam_id)->first()->update([
-            'score' => $tol_mark,
+            'total_score' => $tol_mark,
+            'score1' => $mark_a,
+            'score2' => $mark_b,
+            'status' => '3',
         ]);
 
         return 1;

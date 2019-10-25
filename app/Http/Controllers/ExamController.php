@@ -176,6 +176,31 @@ class ExamController extends Controller
 
     }
 
+    public function dellink2(Request $request){
+        $data = [];
+        if(!$request->input('class_id') || !$request->input('exam_id')){
+            return apiResponse('402', '班级id和考试id不能为空。') ;
+        }
+        try{
+            if(ClassExam::dellink2($request->input('class_id'),$request->input('exam_id'))){
+                return apiResponse('0', '删除考试关联成功。');
+            }else{
+                return apiResponse('402', '考试关联不存在。');
+            }
+
+
+        }catch (\Exception $e) {
+            return $e;
+            //return $this->internalErrRes();
+        }
+
+
+
+    }
+
+
+
+
 
 
 }

@@ -68,6 +68,18 @@ class ClassExam extends Model
 
     }
 
+
+    public static function dellink2($class_id,$exam_id)
+    {
+        $user = ClassExam::where('class_id', $class_id)->where('exam_id', $exam_id)->first();
+        if (!$user) {
+            return 0;
+        } else {
+            $user->delete();
+            return 1;
+        }
+    }
+
     public static function dellink($link_id){
         $user = ClassExam::where('id','=',$link_id)->first();
         if(!$user){
