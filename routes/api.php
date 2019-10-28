@@ -60,7 +60,7 @@ Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(fun
     Route::post('leftscore', 'QuestionController@leftscore'); //考试剩余分数
     Route::post('listques', 'QuestionController@listquestion'); //列出考题
 
-
+    Route::post('gettotalscore', 'AnalysisController@gettotalscore'); //取我的成绩
 
 
     Route::post('sendemail', 'SendEmailController@send'); //发送邮件

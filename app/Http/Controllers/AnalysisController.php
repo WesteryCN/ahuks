@@ -34,14 +34,15 @@ class AnalysisController extends Controller
     }
 
 
-    public static function gettotalinfo(Request $request){
-        if(!$request->input('exam_id')){
-            return apiResponse('402', '考试id不能为空。') ;
+    public static function gettotalscore(Request $request){
+        if(!$request->input('exam_id') || !$request->input('class_id')){
+            return apiResponse('402', '考试id、班级id不能为空。') ;
         }
         try {
             $data = [];
             $exam_id = $request->input('exam_id');
-            //$data = StudentExam::getmyscore($request->id, $exam_id);
+            $class_id = $request->input('class_id');
+            $data = StudentExam::gettotalscore($class_id, $exam_id);
 
             if($data['code'] == 1){
                 return apiResponse('0', '班级成绩获取成功。',$data) ;

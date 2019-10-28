@@ -103,4 +103,34 @@ class StudentExam extends Model
     }
 
 
+    public static function gettotalscore($class_id,$exam_id){
+        $user = Student::where('class_id',$class_id)->get();
+        $data =[];
+        $data['code'] = 0;
+        if($user){
+            foreach ($user as $temp_user){
+                $s_id = $temp_user ->id;
+                $user2 = StudentExam::where('s_id',$s_id)->where('exam_id',$exam_id)->first();
+                if($user2){
+                    $data['student_socre'][$s_id] = array([
+                        's_id' => $s_id,
+                        's_number' => $temp_user->s_number,
+                        's_name' => $temp_user->s_name,
+                        'cheat' => $user2->cheat,
+                        'status' => $user2->status,
+                        'score1' => $user2->score1,
+                        'score2' => $user2->score2,
+                        'total_score' => $user2->total_score,
+                    ]);
+                }
+
+            }
+            $data['code'] = 1;
+        }
+        return $data;
+
+
+    }
+
+
 }
