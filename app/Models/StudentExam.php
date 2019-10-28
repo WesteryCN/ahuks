@@ -115,7 +115,7 @@ class StudentExam extends Model
                     $data['student_socre'][$s_id] = array([
                         's_id' => $s_id,
                         's_number' => $temp_user->s_number,
-                        's_name' => $temp_user->s_name,
+                        's_name' => $temp_user->name,
                         'cheat' => $user2->cheat,
                         'status' => $user2->status,
                         'score1' => $user2->score1,
