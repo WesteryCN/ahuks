@@ -197,7 +197,12 @@ class ClassExam extends Model
                     $temp_status = StudentExam::check($s_id,$temp_exam->exam_id);
                     if($status != "-1"){
                         if($temp_status != $status){
-                            continue;
+                            if($status == 2 and $temp_status ==3){
+
+                            }else{
+                                continue;
+                            }
+
                         }
                     }
 

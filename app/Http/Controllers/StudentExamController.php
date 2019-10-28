@@ -17,7 +17,7 @@ class StudentExamController extends Controller
 {
     public function getmyexam(Request $request)
     {
-        if(!$request->input('status') )
+        if($request->input('status') == null )
         {
             $status = "-1";
         }else{
