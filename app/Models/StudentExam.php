@@ -87,4 +87,20 @@ class StudentExam extends Model
     }
 
 
+    public static function getmyscore($s_id,$exam_id){
+        $user = StudentExam::where('s_id',$s_id)->where('exam_id',$exam_id)->first();
+        $data =[];
+        $data['code'] = 0;
+        if(!$user){
+            return $data;//没有开始
+        }else {
+            $data['score1'] = $user->score1;
+            $data['score2'] = $user->score2;
+            $data['total_score'] = $user->total_score;
+            $data['code'] = 1;
+            return $data;
+        }
+    }
+
+
 }

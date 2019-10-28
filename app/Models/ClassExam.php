@@ -185,12 +185,34 @@ class ClassExam extends Model
             return $data;
         }
 
-
-
-
     }
 
+    public static function listmylink($s_id,$class_id){
+        $data =[];
+        $data['code']='0';
+            $data=[];
+            $exam = ClassExam::where('exam_id','>','0')->where('class_id','=',$class_id) ->get();
+            if($exam){
+                foreach ($exam as $temp_exam){
+                    $data['exam'][$temp_exam->id] = array([
+                        'id' => $temp_exam->id,
+                        'class_id' => $temp_exam->class_id,
+                        'class_name' => Classid::getnamebyid($temp_exam->class_id) ,
+                        //'exam_id' => $temp_exam->exam_id,
+                        //'exam_name' => Exam::getnamebyid($temp_exam->exam_id),
+                        'exam_status' => StudentExam::check($s_id,$temp_exam->exam_id),
+                        'exam_info' => Exam::listexam($temp_exam->exam_id)['exam'][$temp_exam->exam_id],
 
+                    ]);
+                }
+                $data['code']='1';
+            }
+            else{
+                $data['code']='0';
+            }
+            return $data;
+
+    }
 
 
 

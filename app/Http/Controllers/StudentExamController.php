@@ -18,8 +18,9 @@ class StudentExamController extends Controller
     public function getmyexam(Request $request)
     {
         try{
+            $s_id = $request->id;
             $class_id = Student::getclassid($request->user);
-            $data = ClassExam::listlink('-1',$class_id);
+            $data = ClassExam::listmylink($s_id,$class_id);
             return apiResponse('0', '学生考试获取成功！', $data) ;
 
         }catch (\Exception $e) {

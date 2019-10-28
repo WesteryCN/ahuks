@@ -30,6 +30,7 @@ Route::post('student/loginc','StudentController@logincookie');
 //教师管理模块
 Route::middleware(['token.checkAndRenew.teacher'])->prefix('teacher')->group(function () {
     Route::post('info', 'TeacherController@getTeacherInfo'); //调取教师信息
+    Route::get('info', 'TeacherController@getTeacherInfo'); //调取教师信息
     Route::get('logout', 'TeacherController@logout'); //登出
     Route::post('setpasswd', 'TeacherController@setpasswd'); //置密码
     Route::get('liststd', 'TeacherController@liststd'); //列出所有学生
@@ -78,6 +79,8 @@ Route::middleware(['token.checkAndRenew.student'])->prefix('student')->group(fun
     Route::post('startask', 'StudentExamController@startask'); //开始答题考题
     Route::post('getquestion', 'StudentExamController@getmyexamquestion'); //获取考试考题
     Route::post('endask', 'StudentExamController@endask'); //结束答题并提交答案
+
+    Route::post('getmyscore', 'AnalysisController@getmyscore'); //取我的成绩
 
 
 });
