@@ -76,7 +76,7 @@ class StudentAnswer extends Model
             $right_type = $right->type;
             if($t_ans == $right_ans){
                 $iscorrect = 1;
-                if($right_type == 0){
+                if($right_type == 1){
                     $mark_a =$mark_a +$right_mark;
                 }else{
                     $mark_b =$mark_b +$right_mark;
