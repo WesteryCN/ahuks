@@ -17,10 +17,16 @@ class StudentExamController extends Controller
 {
     public function getmyexam(Request $request)
     {
+        if(!$request->input('status') )
+        {
+            $status = "-1";
+        }else{
+            $status = $request->input('status');
+        }
         try{
             $s_id = $request->id;
             $class_id = Student::getclassid($request->user);
-            $data = ClassExam::listmylink($s_id,$class_id);
+            $data = ClassExam::listmylink($s_id,$class_id,$status);
             return apiResponse('0', '学生考试获取成功！', $data) ;
 
         }catch (\Exception $e) {

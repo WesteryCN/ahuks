@@ -187,13 +187,20 @@ class ClassExam extends Model
 
     }
 
-    public static function listmylink($s_id,$class_id){
+    public static function listmylink($s_id,$class_id,$status){
         $data =[];
         $data['code']='0';
             $data=[];
             $exam = ClassExam::where('exam_id','>','0')->where('class_id','=',$class_id) ->get();
             if($exam){
                 foreach ($exam as $temp_exam){
+                    $temp_status = StudentExam::check($s_id,$temp_exam->exam_id);
+                    if($status != "-1"){
+                        if($temp_status != $status){
+                            continue;
+                        }
+                    }
+
                     $data['exam'][$temp_exam->id] = array([
                         'id' => $temp_exam->id,
                         'class_id' => $temp_exam->class_id,
