@@ -93,12 +93,12 @@ class StudentAnswer extends Model
             //$data[$q_id]['right_ans'] = $right_ans;
             //$data[$q_id]['is'] = $iscorrect;
         }
-        $tol_mark = $mark_a +$mark_b;
+        $tol_mark = $mark_a + $mark_b;
         StudentExam::where('s_id',$s_id)->where('exam_id',$exam_id)->first()->update([
+            'status' => '3',
             'total_score' => $tol_mark,
             'score1' => $mark_a,
             'score2' => $mark_b,
-            'status' => '3',
         ]);
 
         return 1;

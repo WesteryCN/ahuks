@@ -70,12 +70,12 @@ class StudentExam extends Model
         if(!$user){
             return 0;//尚未开始
         }else{
+            $user -> update([
+                'status' => '2',
+                'cheat' => $cheat,
+            ]);
             $data = StudentAnswer::handleask($s_id,$exam_id,$stu_ans);
             if ($data == "1"){
-                $user -> update([
-                    'status' => '2',
-                    'cheat' => $cheat,
-                ]);
                 return 1;
             }else{
                 return $data;
