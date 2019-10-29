@@ -126,12 +126,11 @@ class Classid extends Model
      * 添加班级
      */
 
-    public static function addclass($class_id,$class_name,$teacher_id){
+    public static function addclass($class_name,$teacher_id){
         $data=['code'=>'0'];
-        $user = Classid::where('id','=',$class_id)->first();
+        $user = Classid::where('name','=',$class_name)->first();
         if(!$user){
             Classid::insert([
-                'id' => $class_id,
                 'name' => $class_name,
                 't_id' => $teacher_id,
             ]);

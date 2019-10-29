@@ -50,22 +50,22 @@ class ClassController extends Controller
     public function addclass(Request $request){
         $data = [];
         try{
-            $class_id = $request -> input('c_id');
+            //$class_id = $request -> input('c_id');
             $class_name = $request -> input('c_name');
             $teacher_id = $request ->id;
 
-            if(!$class_id || !$class_name ){
+            if( !$class_name ){
                 return apiResponse('401', '请输入班级id和名称！', $data) ;
             }
             if(!$teacher_id){
                 return apiResponse('401', '教师id错误，请重新登录。', $data) ;
             }
-            $data = Classid::addclass($class_id,$class_name,$teacher_id );
+            $data = Classid::addclass($class_name,$teacher_id );
 
             if($data['code']=='1'){
                 return apiResponse('0', '班级创建成功！', $data) ;
             } else{
-                return apiResponse('401', '班级id已存在!', $data) ;
+                return apiResponse('401', '班级名称已存在!', $data) ;
             }
 
         }catch (\Exception $e) {
